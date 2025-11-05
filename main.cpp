@@ -132,8 +132,37 @@ void readCreatures(list<Creature> &creatureList, string line)
         line = line.substr(5);
     }
 
+    // Create a string variable to store the name
+    string name;
+
+    cout << "String: " << line << endl;
+
     // Split the Creatures and add to the list
-    
+    while (line.size() != 0)
+    {
+        // Create a new string from the start of the line to ", "
+        name = line.substr(0, line.find(", "));
+
+        cout << "Creature's name: " << name << endl;
+
+        // Create a new Creature and add to the list
+        Creature c(name);
+        creatureList.push_back(c);
+
+        // Check whether there are anymore ", " (commas)
+        if (line.find(", ") != string::npos)
+        {
+            // Cut the string from the Creature's name + ", " til the end
+            line = line.substr(name.size() + 2);
+
+            cout << "Remaining string: " << line << endl;
+        }
+        else
+        {
+            // Exit the loop
+            break;
+        }
+    }
 }
 
 bool isEra(string line)

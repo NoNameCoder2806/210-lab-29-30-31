@@ -4,6 +4,7 @@
 // Libraries
 #include <iostream>
 #include <string>
+using namespace std;
 
 // Creature class
 class Creature
