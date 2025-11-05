@@ -15,8 +15,8 @@
 using namespace std;
 
 // Constants
-const int MIN = 3;
-const int MAX = 5;
+const int MIN_CREATURES = 3;
+const int MAX_CREATURES = 5;
 const int LAND_INDEX = 0;
 const int WATER_INDEX = 1;
 const int AIR_INDEX = 2;
@@ -38,7 +38,9 @@ int main()
     string data_path = DATA_FILE;
 
     // Read all the data and populate the allCreatures map
-    readData(allCreatures, data_path);
+    readData(allCreatures, data_path);    
+
+    // Randomly add a number of creatures into each
 
     return 0;
 }
@@ -104,13 +106,21 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
             // Store the water creatures into the list
             readCreatures(waterCreatures, line);
         }
-        else if (line.find("AIR: " == 0))
+        else if (line.find("AIR: ") == 0)
         {
             // Store the air creatures into the list
             readCreatures(airCreatures, line);
         }
-    }
 
+        // Create an array and insert all the lists into it
+        array<list<Creature>, 3> creaturesArray;
+        creaturesArray[LAND_INDEX] = landCreatures;
+        creaturesArray[WATER_INDEX] = waterCreatures;
+        creaturesArray[AIR_INDEX] = airCreatures;
+
+        // Make the data a pair and insert it into the map
+        allCreatures.insert(make_pair(key, creaturesArray));
+    }
 }
 
 void readCreatures(list<Creature> &creatureList, string line)
@@ -135,15 +145,11 @@ void readCreatures(list<Creature> &creatureList, string line)
     // Create a string variable to store the name
     string name;
 
-    cout << "String: " << line << endl;
-
     // Split the Creatures and add to the list
     while (line.size() != 0)
     {
         // Create a new string from the start of the line to ", "
         name = line.substr(0, line.find(", "));
-
-        cout << "Creature's name: " << name << endl;
 
         // Create a new Creature and add to the list
         Creature c(name);
@@ -154,8 +160,6 @@ void readCreatures(list<Creature> &creatureList, string line)
         {
             // Cut the string from the Creature's name + ", " til the end
             line = line.substr(name.size() + 2);
-
-            cout << "Remaining string: " << line << endl;
         }
         else
         {
