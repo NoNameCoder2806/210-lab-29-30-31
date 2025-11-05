@@ -49,6 +49,12 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
     // Create a string to store the line's data
     string line;
 
+    // Create a string and 3 lists to store the key, and the creatures of each category
+    string key;                           // The key for the map
+    list<Creature> landCreatures;         // Land Creatures list
+    list<Creature> waterCreatures;        // Water Creatures list
+    list<Creature> airCreatures;          // Air Creatures list
+
     // Read the data file
     while(getline(fin, line))
     {
@@ -61,7 +67,8 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
         // Check for the era
         if (isEra(line))
         {
-
+            // If this line is the era, we store the key
+            
         }
     }
 
