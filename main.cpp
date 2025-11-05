@@ -24,6 +24,7 @@ const string DATA_FILE = "data.txt";
 
 // Function prototypes
 void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path);
+void readCreatures(list<Creature> &creatureList, string line);
 bool isEra(string line);
 
 // Main function
@@ -95,18 +96,44 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
         // Check for the Creatures type
         if (line.find("LAND: ") == 0)
         {
-            
+            // Store the land creatures into the list
+            readCreatures(landCreatures, line);
         }
         else if (line.find("WATER: ") == 0)
         {
-
+            // Store the water creatures into the list
+            readCreatures(waterCreatures, line);
         }
         else if (line.find("AIR: " == 0))
         {
-
+            // Store the air creatures into the list
+            readCreatures(airCreatures, line);
         }
     }
 
+}
+
+void readCreatures(list<Creature> &creatureList, string line)
+{
+    // Remove the Creature category at the beginning of the line
+    if (line.find("LAND: ") == 0)
+    {
+        // Remove the first 6 characters;
+        line = line.substr(6);
+    }
+    else if (line.find("WATER: ") == 0)
+    {
+        // Remove the first 7 characters
+        line = line.substr(7);
+    }
+    else if (line.find("AIR: ") == 0)
+    {
+        // Remove the first 5 characters
+        line = line.substr(5);
+    }
+
+    // Split the Creatures and add to the list
+    
 }
 
 bool isEra(string line)
