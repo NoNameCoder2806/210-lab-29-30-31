@@ -1,0 +1,10 @@
+Project Overview:
+My project creates a prehistoric ecosystem simulation, a program designed to predict the future changes over the next 100 years within different prehistoric periods. This software will illustrate the potential impact of species alterations such as evolution, addition, and extinction of the time periods.
+
+Implementation:
+I plan to use a std::map to store and manage data related to different creatures across each prehistoric time periods. This map will categorize living creatures into three std::lists representing land creatures, water creatures, and air creatures. The map will have the prehistoric time periods as its key. The map's value will be an array of these three lists.
+
+One map entry would be for the Triassic era. The three lists would represent the land, aquatic, and air creatures of the time period. Another map entry would be for the Jurassic era; a third might be for the Cretaceous era.
+
+Simulated events:
+The simulation will focus on three events: the addition / introduction of species across the different time periods; evolution of species making them harder to extinct, and finally the extinction of species across the eras. At any given time period, disasters might occur and wipe out some creatures, a disease could infect them, but their population can also be multiplied. Creatures who evolved enough would be added into the next era.
