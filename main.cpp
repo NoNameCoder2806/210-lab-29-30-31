@@ -3,6 +3,16 @@
 
 // Libraries
 #include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+// Constants
+const string DATA_FILE = "data.txt";
+
+// Function prototypes
+void readData();
 
 // Main function
 int main()

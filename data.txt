@@ -1,0 +1,14 @@
+Triassic
+LAND: Coelophysis, Plateosaurus, Herrerasaurus, Eoraptor, Postosuchus, Saltopus, Melanorosaurus
+WATER: Nothosaurus, Tanystropheus, Cymbospondylus
+AIR: Peteinosaurus, Preondactylus
+
+Jurassic
+LAND: Stegosaurus, Allosaurus, Brachiosaurus, Camarasaurus
+WATER: Plesiosaurus, Ophthalmosaurus, Liopleurodon
+AIR: Archaeopteryx, Rhamphorhynchus
+
+Cretaceous
+LAND: Triceratops, Tyrannosaurus, Ankylosaurus, Iguanodon, Parasaurolophus
+WATER: Mosasaurus, Elasmosaurus, Tylosaurus
+AIR: Pteranodon, Quetzalcoatlus, Tapejara
