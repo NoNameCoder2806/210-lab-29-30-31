@@ -9,9 +9,23 @@
 class Creature
 {
 private:
-    string name;
-    int level;
+    string name;        // The name of the Creature
+    int level;          // The evolution level of the Creature
+    
 public:
+    // Constructors
+    Creature()                       // Default constructor
+    {
+        name = "";
+        level = 0;
+    }
+
+    Creature(string n, int l)        // Parameters constructor
+    {
+        name = n;
+        level = l;
+    }
+
     // Accessors / Getters
     string getName()
     {
@@ -29,5 +43,24 @@ public:
         name = n;
     }
 
-    void setLevel()
-}
+    void setLevel(int l)
+    {
+        level = l;
+    }
+
+    // Member functions
+    void increaseLevel()        // Increase evolution level by 1
+    {
+        level++;
+    }
+
+    void decreaseLevel()        // Decrease evolution level by 1
+    {
+        level--;
+    }
+
+    friend ostream& operator<<(ostream &o, const Creature& c)        // Overload the << operator
+    {
+        return o << c.name << "(" << c.level << ")";
+    }
+};

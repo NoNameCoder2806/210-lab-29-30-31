@@ -20,7 +20,7 @@ const int MAX = 5;
 const string DATA_FILE = "data.txt";
 
 // Function prototypes
-void readData();
+void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path);
 
 // Main function
 int main()
@@ -29,5 +29,22 @@ int main()
     map<string, array<list<Creature>, 3>> allCreatures;         // A map to store all the Creatures
     map<string, array<list<Creature>, 3>> simulatedEras;        // A map to simulate all the eras
 
+    // Create a string to store the data path
+    string data_path = DATA_FILE;
+
+    // Read all the data and populate the allCreatures map
+    readData(allCreatures, data_path);
+
     return 0;
+}
+
+// Function implementation
+void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path)
+{
+    // Create a file stream
+    ifstream fin;
+    fin.open(data_path);
+
+    // Read the data file
+    
 }
