@@ -21,6 +21,7 @@ const string DATA_FILE = "data.txt";
 
 // Function prototypes
 void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path);
+bool isEra(string line);
 
 // Main function
 int main()
@@ -45,6 +46,35 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
     ifstream fin;
     fin.open(data_path);
 
+    // Create a string to store the line's data
+    string line;
+
     // Read the data file
-    
+    while(getline(fin, line))
+    {
+        // Check for empty lines
+        if (line.empty())
+        {
+            continue;
+        }
+
+        // Check for the era
+        if (isEra(line))
+        {
+
+        }
+    }
+
+}
+
+bool isEra(string line)
+{
+    // Check whether it is one of the eras or not
+    if (line == "Triassic" || line == "Jurassic" || line == "Cretaceous")
+    {
+        return true;
+    }
+
+    // Otherwise
+    return false;
 }

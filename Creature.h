@@ -11,7 +11,7 @@ class Creature
 private:
     string name;        // The name of the Creature
     int level;          // The evolution level of the Creature
-    
+
 public:
     // Constructors
     Creature()                       // Default constructor
@@ -20,7 +20,13 @@ public:
         level = 0;
     }
 
-    Creature(string n, int l)        // Parameters constructor
+    Creature(string n)               // Parameters constructor (name only)
+    {
+        name = n;
+        level = rand() % 3;
+    }
+
+    Creature(string n, int l)        // Parameters constructor (name and level)
     {
         name = n;
         level = l;
