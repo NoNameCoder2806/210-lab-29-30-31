@@ -41,6 +41,9 @@ int main()
     // Read all the data and populate the allCreatures map
     readData(allCreatures, data_path);    
 
+    // Display the data of the allCreatures map
+    displayMap(allCreatures);
+
     // Randomly add a number of creatures into each
 
     return 0;
@@ -188,12 +191,47 @@ void displayMap(map<string, array<list<Creature>, 3>> &creatureMap)
     for (auto pair : creatureMap)
     {
         // Display the era
-        cout << "";
-        
-        // Iterate through each list of the array
-        for (auto list : pair.second)
-        {
+        cout << " --- Era: " << pair.first << " --- " << endl;
 
+        // Iterate through each list of the array
+        for (int i = 0; i < pair.second.size(); i++)
+        {
+            // Display the type (land, water, air)
+            if (i == 0)
+            {
+                // Land Creatures
+                cout << " - Land Creatures: ";
+            }
+            else if (i == 1)
+            {
+                // Water Creatures
+                cout << " - Water Creatures: ";
+            }
+            else if (i == 2)
+            {
+                // Air Creatures
+                cout << " - Air Creatures: ";
+            }
+
+            // Iterate and display the Creatures in the list
+            for (auto it = pair.second.at(i).begin(); it != pair.second.at(i).end(); ++it)
+            {
+                // Display the Creature using operator<<() function
+                cout << *it;
+
+                // Check if this is the last item of the list
+                if (std::next(it) != pair.second.at(i).end())
+                {
+                    // Display ", " if it's not (the last item of the list)
+                    cout << ", ";
+                }
+            }
+
+            // Enter a new line
+            cout << endl;
         }
+
+        // Enter a new line
+        cout << endl;
     }
 }
