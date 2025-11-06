@@ -107,9 +107,6 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
 
             // Insert the list into the array
             creaturesArray[LAND_INDEX] = landCreatures;
-
-            // Display the list
-            displayList(landCreatures);
         }
         else if (line.find("WATER: ") == 0)
         {
@@ -118,9 +115,6 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
 
             // Insert the list into the array
             creaturesArray[WATER_INDEX] = waterCreatures;
-
-            // Display the list
-            displayList(waterCreatures);
         }
         else if (line.find("AIR: ") == 0)
         {
@@ -129,9 +123,6 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
 
             // Insert the list into the array
             creaturesArray[AIR_INDEX] = airCreatures;
-
-            // Display the list
-            displayList(airCreatures);
 
             // Insert the data into the map after Air Creatures were read
             allCreatures.insert(make_pair(key, creaturesArray));
