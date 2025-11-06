@@ -26,8 +26,8 @@ const string DATA_FILE = "data.txt";
 void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path);
 void readCreatures(list<Creature> &creatureList, string line);
 bool isEra(string line);
-void displayList(list<Creature> &creatureList);
-void displayMap(map<string, array<list<Creature>, 3>> &creatureMap);
+void displayList(const list<Creature> &creatureList);
+void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 
 // Main function
 int main()
@@ -199,7 +199,7 @@ bool isEra(string line)
     return false;
 }
 
-void displayList(list<Creature> &creatureList)
+void displayList(const list<Creature> &creatureList)
 {
     // Iterate and display the Creatures in the list
     for (auto it = creatureList.begin(); it != creatureList.end(); ++it)
@@ -219,7 +219,7 @@ void displayList(list<Creature> &creatureList)
     cout << endl;
 }
 
-void displayMap(map<string, array<list<Creature>, 3>> &creatureMap)
+void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
 {
     // Iterate through each pair of data
     for (auto pair : creatureMap)
@@ -247,22 +247,8 @@ void displayMap(map<string, array<list<Creature>, 3>> &creatureMap)
                 cout << " - Air Creatures: ";
             }
 
-            // Iterate and display the Creatures in the list
-            for (auto it = pair.second.at(i).begin(); it != pair.second.at(i).end(); ++it)
-            {
-                // Display the Creature using operator<<() function
-                cout << *it;
-
-                // Check if this is the last item of the list
-                if (std::next(it) != pair.second.at(i).end())
-                {
-                    // Display ", " if it's not (the last item of the list)
-                    cout << ", ";
-                }
-            }
-
-            // Enter a new line
-            cout << endl;
+            // Display the Creatures in the list
+            displayList(pair.second.at(i));
         }
 
         // Enter a new line
