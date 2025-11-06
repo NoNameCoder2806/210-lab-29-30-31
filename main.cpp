@@ -135,7 +135,7 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
             // Display the list
             displayList(airCreatures);
 
-            // Make the data a pair and insert it into the map
+            // Insert the data into the map after Air Creatures were read
             allCreatures.insert(make_pair(key, creaturesArray));
         }
     }

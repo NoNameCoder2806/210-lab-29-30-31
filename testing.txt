@@ -1,0 +1,15 @@
+Unit Testing
+
+Functions to test:
+1. void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path)
+2. void readCreatures(list<Creature> &creatureList, string line)
+3. bool isEra(string line)
+4. void displayList(const list<Creature> &creatureList)
+5. void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
+
+Purpose and goals:
+- Ensure data are read correctly
+- Populate the list and map with data
+- Ensure the data are added into the correct lists and maps
+- Display the data (from the lists, maps) for the testing process
+- Handle errors (files failing to open, etc)
