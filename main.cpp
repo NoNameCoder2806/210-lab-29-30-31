@@ -49,6 +49,14 @@ int main()
 }
 
 // Function implementation
+/*
+    readData()
+    Read the data from the file data.txt and populate the map
+    Arguments:
+        - allCreatures: the map containing all the Creatures from all eras (passed by reference)
+        - data_path: the path to the data file
+    Return: none
+*/
 void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path)
 {
     // Create a file stream
@@ -130,6 +138,14 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
     }
 }
 
+/*
+    readCreatures()
+    Read the Creatures data from a line and populate the list
+    Arguments:
+        - creatureList: a list of Creatures (passed by reference)
+        - line: the data line
+    Return: none
+*/
 void readCreatures(list<Creature> &creatureList, string line)
 {
     // Remove the Creature category at the beginning of the line
@@ -176,6 +192,15 @@ void readCreatures(list<Creature> &creatureList, string line)
     }
 }
 
+/*
+    isEra()
+    Check whether the line of string is the name of an era or not
+    Arguments:
+        - line: a string
+    Return:
+        - true if the line is a name of an era
+        - false if otherwise
+*/
 bool isEra(string line)
 {
     // Check whether it is one of the eras or not
@@ -188,6 +213,13 @@ bool isEra(string line)
     return false;
 }
 
+/*
+    displayList()
+    Display the Creatures from the list
+    Arguments:
+        - creatureList: the list of Creatures (passed by const reference)
+    Return: none
+*/
 void displayList(const list<Creature> &creatureList)
 {
     // Iterate and display the Creatures in the list
@@ -208,6 +240,13 @@ void displayList(const list<Creature> &creatureList)
     cout << endl;
 }
 
+/*
+    displayMap()
+    Display all the eras of the map and all the Creatures of those eras
+    Arguments:
+        - creatureMap: the map of eras and the Creatures of those eras (passed by const reference)
+    Return: none
+*/
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
 {
     // Iterate through each pair of data
