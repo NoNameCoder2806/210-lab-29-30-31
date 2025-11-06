@@ -18,3 +18,12 @@ Testing approach:
 - readData() and displayMap() are directly called and tested in the main function.
 - isEra() and readCreatures() are called and tested in the readData() function.
 - displayList() is also called and tested in the displayMap() function.
+
+Expected results:
+- Every functions should work accordingly.
+    + isEra() should return true if the string is "Triassic", "Jurassic", or "Cretaceous".
+    + readCreatures() should read and populate the data of a line into a list.
+    + readData() should read and populate the data into the maps.
+    + displayList() should display all the Creatures in the list.
+    + displayMap() should display the era's name, and all the lists of Creatures.
+- If the data file fails to open, an error message should be displayed and the readData() function should exit
