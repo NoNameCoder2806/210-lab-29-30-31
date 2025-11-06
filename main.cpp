@@ -26,6 +26,7 @@ const string DATA_FILE = "data.txt";
 void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path);
 void readCreatures(list<Creature> &creatureList, string line);
 bool isEra(string line);
+void displayMap(map<string, array<list<Creature>, 3>> &creatureMap);
 
 // Main function
 int main()
@@ -179,4 +180,20 @@ bool isEra(string line)
 
     // Otherwise
     return false;
+}
+
+void displayMap(map<string, array<list<Creature>, 3>> &creatureMap)
+{
+    // Iterate through each pair of data
+    for (auto pair : creatureMap)
+    {
+        // Display the era
+        cout << "";
+        
+        // Iterate through each list of the array
+        for (auto list : pair.second)
+        {
+
+        }
+    }
 }
