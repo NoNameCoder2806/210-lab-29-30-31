@@ -45,8 +45,6 @@ int main()
     // Display the data of the allCreatures map
     displayMap(allCreatures);
 
-    // Randomly add a number of creatures into each
-
     return 0;
 }
 

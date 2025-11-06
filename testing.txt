@@ -13,3 +13,8 @@ Purpose and goals:
 - Ensure the data are added into the correct lists and maps
 - Display the data (from the lists, maps) for the testing process
 - Handle errors (files failing to open, etc)
+
+Testing approach:
+- readData() and displayMap() are directly called and tested in the main function.
+- isEra() and readCreatures() are called and tested in the readData() function.
+- displayList() is also called and tested in the displayMap() function.
