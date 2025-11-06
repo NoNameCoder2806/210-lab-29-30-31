@@ -26,6 +26,7 @@ const string DATA_FILE = "data.txt";
 void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_path);
 void readCreatures(list<Creature> &creatureList, string line);
 bool isEra(string line);
+void displayList(list<Creature> &creatureList);
 void displayMap(map<string, array<list<Creature>, 3>> &creatureMap);
 
 // Main function
@@ -69,11 +70,12 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
     // Create a string to store the line's data
     string line;
 
-    // Create a string and 3 lists to store the key, and the creatures of each category
-    string key;                           // The key for the map
-    list<Creature> landCreatures;         // Land Creatures list
-    list<Creature> waterCreatures;        // Water Creatures list
-    list<Creature> airCreatures;          // Air Creatures list
+    // Create a string, an array, and 3 lists to store the key, and the creatures of each category
+    string key;                                     // The key for the map
+    array<list<Creature>, 3> creaturesArray;        // Array to store all the Creatures lists
+    list<Creature> landCreatures;                   // Land Creatures list
+    list<Creature> waterCreatures;                  // Water Creatures list
+    list<Creature> airCreatures;                    // Air Creatures list
 
     // Read the data file
     while(getline(fin, line))
@@ -104,26 +106,38 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
         {
             // Store the land creatures into the list
             readCreatures(landCreatures, line);
+
+            // Insert the list into the array
+            creaturesArray[LAND_INDEX] = landCreatures;
+
+            // Display the list
+            displayList(landCreatures);
         }
         else if (line.find("WATER: ") == 0)
         {
             // Store the water creatures into the list
             readCreatures(waterCreatures, line);
+
+            // Insert the list into the array
+            creaturesArray[WATER_INDEX] = waterCreatures;
+
+            // Display the list
+            displayList(waterCreatures);
         }
         else if (line.find("AIR: ") == 0)
         {
             // Store the air creatures into the list
             readCreatures(airCreatures, line);
+
+            // Insert the list into the array
+            creaturesArray[AIR_INDEX] = airCreatures;
+
+            // Display the list
+            displayList(airCreatures);
+
+            // Make the data a pair and insert it into the map
+            allCreatures.insert(make_pair(key, creaturesArray));
         }
-
-        // Create an array and insert all the lists into it
-        array<list<Creature>, 3> creaturesArray;
-        creaturesArray[LAND_INDEX] = landCreatures;
-        creaturesArray[WATER_INDEX] = waterCreatures;
-        creaturesArray[AIR_INDEX] = airCreatures;
-
-        // Make the data a pair and insert it into the map
-        allCreatures.insert(make_pair(key, creaturesArray));
     }
 }
 
@@ -183,6 +197,26 @@ bool isEra(string line)
 
     // Otherwise
     return false;
+}
+
+void displayList(list<Creature> &creatureList)
+{
+    // Iterate and display the Creatures in the list
+    for (auto it = creatureList.begin(); it != creatureList.end(); ++it)
+    {
+        // Display the Creature using operator<<() function
+        cout << *it;
+
+        // Check if this is the last item of the list
+        if (std::next(it) != creatureList.end())
+        {
+            // Display ", " if it's not (the last item of the list)
+            cout << ", ";
+        }
+    }
+
+    // Enter a new line
+    cout << endl;
 }
 
 void displayMap(map<string, array<list<Creature>, 3>> &creatureMap)
