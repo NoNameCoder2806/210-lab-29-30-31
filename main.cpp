@@ -1,4 +1,4 @@
-// COMSC-210 | Lab 30 | Dat Hoang Vien
+// COMSC-210 | Lab 31 | Dat Hoang Vien
 // IDE used: Visual Studio Code
 
 // Libraries
