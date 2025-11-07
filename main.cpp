@@ -28,6 +28,7 @@ void readCreatures(list<Creature> &creatureList, string line);
 bool isEra(string line);
 void displayList(const list<Creature> &creatureList);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
+void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
 
 // Main function
 int main()
@@ -44,6 +45,9 @@ int main()
 
     // Display the data of the allCreatures map
     displayMap(allCreatures);
+
+    // Randomly add a number of Creatures into the first era
+    
 
     return 0;
 }
