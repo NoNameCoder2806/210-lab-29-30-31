@@ -102,8 +102,12 @@ int main()
             simulateEvents(simulatedEras, i);
         }
 
+        // Enter a new line
+        cout << endl;
+
         // Display result after simulation
         cout << " ----- AFTER SIMULATION ----- " << endl;
+        cout << " ===== " << uppercasedEra << " ===== " << endl;
         
         // Display the Creatures in the array of the era
         displayArray(simulatedEras.at(era));
@@ -438,29 +442,30 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
         // Get the previous era's key
         string prevKey = it->first;
 
-        // Advance the iterator to the current era (advance 1 position)
-        advance(it, 1);
+        // Create another iterator and advance to eraIndex positions
+        auto it2 = simulatedEras.begin();
+        advance(it2, eraIndex);
 
         // Get this current era's key
-        string currentKey = it->first;
+        string currentKey = it2->first;
 
         // Iterate through each of the lists (land, water, air)
         for (int i = 0; i < it->second.size(); i++)
         {
-            // Create an iterator to iterate through each of the lists
-            auto it2 = it->second.at(i).begin();
+            // Create another iterator to iterate through each of the lists
+            auto it3 = it->second.at(i).begin();
 
             // Iterate through each Creature in the list
-            while(it2 != it->second.at(i).end())
+            while(it3 != it->second.at(i).end())
             {
                 // Check the Creatures' evolution level
-                if (it2->getLevel() >= MIN_EVOLUTION_LEVEL)
+                if (it3->getLevel() >= MIN_EVOLUTION_LEVEL)
                 {
                     // Display the Creature
-                    cout << " - High level Creature: " << *it2 << " - " << endl;
+                    cout << " - High level Creature: " << *it3 << " - " << endl;
 
                     // Copy into a new Creature
-                    Creature temp = *it2;
+                    Creature temp = *it3;
 
                     // Reset the Ceature's evolution level
                     temp.resetLevel();
@@ -473,7 +478,7 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
                 }
 
                 // Advance the iterator by 1 position
-                advance(it2, 1);
+                advance(it3, 1);
             }
         }
     }
