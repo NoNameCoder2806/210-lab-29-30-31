@@ -287,3 +287,23 @@ void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
         cout << endl;
     }
 }
+
+/*
+    populateList()
+    Populate one of the list (an era) with Creatures based on the allCreatures map
+    Arguments:
+        - simulatedEras: the map storing all the eras to simulate
+        - allCreatures: the map storing all Creatures from all eras
+        - eraIndex: the index of the era to simulate
+    Return: none
+*/
+void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex)
+{
+    // Create an iterator and advance eraIndex positions
+    auto it = allCreatures.begin();
+    advance(it, eraIndex);
+
+    // Create variables to store the key and the Creatures list
+    string key = it->first;
+    list<Creature> creatureList;
+}
