@@ -36,6 +36,7 @@ void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 
+
 // Main function
 int main()
 {
