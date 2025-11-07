@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 #include <map>
 #include <array>
 #include <list>
@@ -33,6 +35,9 @@ void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const ma
 // Main function
 int main()
 {
+    // Call srand() and time()
+    srand(time(0));
+
     // Create 2 maps, 1 to store the creatures list, another one to simulate
     map<string, array<list<Creature>, 3>> allCreatures;         // A map to store all the Creatures
     map<string, array<list<Creature>, 3>> simulatedEras;        // A map to simulate all the eras
@@ -306,4 +311,9 @@ void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const ma
     // Create variables to store the key and the Creatures list
     string key = it->first;
     list<Creature> creatureList;
+
+    // Generate a random number of Creatures
+    int n = rand() % (MAX_CREATURES - MIN_CREATURES + 1) + MIN_CREATURES;
+
+    // 
 }
