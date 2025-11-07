@@ -308,12 +308,20 @@ void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const ma
     auto it = allCreatures.begin();
     advance(it, eraIndex);
 
-    // Create variables to store the key and the Creatures list
-    string key = it->first;
-    list<Creature> creatureList;
+    // Create variables to store the key and the Creatures lists
+    string key = it->first;                                     // The key (the name of the era, i.e. "Jurassic")
+    array<list<Creature>, 3> originalArray = it->second;        // The original array of Creatures
+    array<list<Creature>, 3> eraArray;                          // The array we are going to use
 
-    // Generate a random number of Creatures
-    int n = rand() % (MAX_CREATURES - MIN_CREATURES + 1) + MIN_CREATURES;
+    // Iterate through the array
+    for (int i = 0; i < originalArray.size(); i++)
+    {
+        // Generate a random number of Creatures
+        int n = rand() % (MAX_CREATURES - MIN_CREATURES + 1) + MIN_CREATURES;
 
-    // 
+        // Create a list and copy the Creatures into it
+        list<Creature> originalList = originalArray[i];
+    }
+    list<Creature> creatureList;          // Our list
+    list<Creature> originalList;          // Original list (copy from the map)
 }
