@@ -21,6 +21,7 @@ using namespace std;
 // Constants
 const int MIN_CREATURES = 3;
 const int MAX_CREATURES = 5;
+const int SIMULATIONS = 25;
 const int LAND_INDEX = 0;
 const int WATER_INDEX = 1;
 const int AIR_INDEX = 2;
@@ -70,6 +71,18 @@ int main()
         // Add the high level Creatures from the previous era in
         addEvolvedCreatures(simulatedEras, i);
 
+        displayMap(simulatedEras);
+
+        // Simulate the events 25 times
+        for (int j = 0; j < SIMULATIONS; j++)
+        {
+            // Display the simulation count
+            cout << " ----- SIMULATION: " << j + 1 << " ----- " << endl;
+            
+            // Call the simulateEvents() function, pass in the map and the era index
+            simulateEvents(simulatedEras, i);
+        }
+        
         displayMap(simulatedEras);
     }
 
@@ -397,7 +410,7 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
                 if (it2->getLevel() >= MIN_EVOLUTION_LEVEL)
                 {
                     // Display the Creature
-                    cout << "High level: " << *it2 << endl;
+                    cout << " - High level Creature: " << *it2 << " - " << endl;
 
                     // Copy into a new Creature
                     Creature temp = *it2;
@@ -406,7 +419,7 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
                     temp.resetLevel();
 
                     // Display the Creature's new info
-                    cout << "Adding: " << temp;
+                    cout << " --- Adding: " << temp << " --- " << endl;
 
                     // Add the Creature into the current Era
                     simulatedEras.at(prevKey).at(i).push_back(temp);
