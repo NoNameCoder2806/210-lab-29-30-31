@@ -72,15 +72,16 @@ int main()
 
         // Store the era
         string era = it->first;
+        string uppercasedEra = era;
 
         // Convert the string to uppercase
-        transform(era.begin(), era.end(), era.begin(), [](unsigned char c)
+        transform(uppercasedEra.begin(), uppercasedEra.end(), uppercasedEra.begin(), [](unsigned char c)
         {
             return toupper(c);
         });
 
         // Display the era
-        cout << " ===== " << era << " ===== " << endl;
+        cout << " ===== " << uppercasedEra << " ===== " << endl;
 
         // Randomly add a number of Creatures into the first era
         populateEra(simulatedEras, allCreatures, i);
@@ -88,7 +89,8 @@ int main()
         // Add the high level Creatures from the previous era in
         addEvolvedCreatures(simulatedEras, i);
 
-        displayList(simulatedEras.);
+        // Display the Creatures in the array of the era
+        displayArray(simulatedEras.at(era));
 
         // Simulate the events 25 times
         for (int j = 0; j < SIMULATIONS; j++)
@@ -99,8 +101,17 @@ int main()
             // Call the simulateEvents() function, pass in the map and the era index
             simulateEvents(simulatedEras, i);
         }
+
+        // Display result after simulation
+        cout << " ----- AFTER SIMULATION ----- " << endl;
         
-        displayMap(simulatedEras);
+        // Display the Creatures in the array of the era
+        displayArray(simulatedEras.at(era));
+
+        // Display a barrier
+        cout << "=================================================="          // Display 50 =
+             << "=================================================="          // Display another 50 =
+             << endl << endl;
     }
 
     return 0;
@@ -301,28 +312,10 @@ void displayList(const list<Creature> &creatureList)
 /*
 
 */
-displayArray()
+void displayArray(const array<list<Creature>, 3> &creatureArray)
 {
-    
-}
-
-/*
-    displayMap()
-    Display all the eras of the map and all the Creatures of those eras
-    Arguments:
-        - creatureMap: the map of eras and the Creatures of those eras (passed by const reference)
-    Return: none
-*/
-void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
-{
-    // Iterate through each pair of data
-    for (auto pair : creatureMap)
-    {
-        // Display the era
-        cout << " --- Era: " << pair.first << " --- " << endl;
-
-        // Iterate through each list of the array
-        for (int i = 0; i < pair.second.size(); i++)
+    // Iterate through each list of the array
+        for (int i = 0; i < creatureArray.size(); i++)
         {
             // Display the type (land, water, air)
             if (i == 0)
@@ -342,8 +335,30 @@ void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
             }
 
             // Display the Creatures in the list
-            displayList(pair.second.at(i));
+            displayList(creatureArray.at(i));
         }
+
+        // Enter a new line
+        cout << endl;
+}
+
+/*
+    displayMap()
+    Display all the eras of the map and all the Creatures of those eras
+    Arguments:
+        - creatureMap: the map of eras and the Creatures of those eras (passed by const reference)
+    Return: none
+*/
+void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
+{
+    // Iterate through each pair of data
+    for (auto pair : creatureMap)
+    {
+        // Display the era
+        cout << " --- Era: " << pair.first << " --- " << endl;
+
+        // Display the array
+        displayArray(creatureMap.at(pair.first));
 
         // Enter a new line
         cout << endl;
