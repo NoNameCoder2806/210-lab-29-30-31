@@ -24,7 +24,7 @@ const int MAX_CREATURES = 5;
 const int LAND_INDEX = 0;
 const int WATER_INDEX = 1;
 const int AIR_INDEX = 2;
-const int EVOLUTION_MIN_LEVEL = 5;
+const int MIN_EVOLUTION_LEVEL = 5;
 const string DATA_FILE = "data.txt";
 
 // Function prototypes
@@ -34,7 +34,7 @@ bool isEra(string line);
 void displayList(const list<Creature> &creatureList);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
-void addStrongCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
+void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 
 // Main function
 int main()
@@ -55,10 +55,17 @@ int main()
     // Display the data of the allCreatures map
     displayMap(allCreatures);
 
-    // Randomly add a number of Creatures into the first era
-    populateEra(simulatedEras, allCreatures, 0);
+    // Create a loop to simulate the eras
+    for (int i = 0; i < allCreatures.size(); i++)
+    {
+        // Randomly add a number of Creatures into the first era
+        populateEra(simulatedEras, allCreatures, i);
 
-    displayMap(simulatedEras);
+        // Add the high level Creatures from the previous era in
+        addEvolvedCreatures(simulatedEras, i);
+
+        displayMap(simulatedEras);
+    }
 
     return 0;
 }
@@ -347,10 +354,14 @@ void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map
 }
 
 /*
-    addStrongCreatures()
-    Add the 
+    addEvolvedCreatures()
+    Add the Creatures whose level is above MIN_EVOLUTION_LEVEL
+    Arguments:
+        - simulatedEras: the map of all the eras to simulate
+        - eraIndex: the index of the era to simulate
+    Return: none
 */
-void addStrongCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex)
+void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex)
 {
     // If this is the first era, we skip
     if (eraIndex == 0)
@@ -367,20 +378,20 @@ void addStrongCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, in
         // Get the previous era's key
         string prevKey = it->first;
 
-        // Iterate through the array of the lists and add all the high level Creatures in
+        // Iterate through each of the lists (land, water, air)
         for (int i = 0; i < it->second.size(); i++)
         {
             // Create an iterator to iterate through each of the lists
             auto it2 = it->second.at(i).begin();
 
-            // Iterate through each Creature
+            // Iterate through each Creature in the list
             while(it2 != it->second.at(i).end())
             {
                 // Check the Creatures' evolution level
-                if (it2->getLevel() >= EVOLUTION_MIN_LEVEL)
+                if (it2->getLevel() >= MIN_EVOLUTION_LEVEL)
                 {
                     // Display the Creature
-                    cout << *it2 << endl;
+                    cout << "High level: " << *it2 << endl;
 
                     // Copy into a new Creature
                     Creature temp = *it2;
@@ -389,11 +400,14 @@ void addStrongCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, in
                     temp.resetLevel();
 
                     // Display the Creature's new info
-                    cout << temp;
+                    cout << "Adding: " << temp;
 
                     // Add the Creature into the current Era
-                    simulatedEras.at(eraIndex)
+                    simulatedEras.at(prevKey).at(i).push_back(temp);
                 }
+
+                // Advance the iterator by 1 position
+                advance(it2, 1);
             }
         }
     }
