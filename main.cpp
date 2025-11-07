@@ -60,11 +60,21 @@ int main()
     readData(allCreatures, data_path);    
 
     // Display the data of the allCreatures map
-    displayMap(allCreatures);
+    // displayMap(allCreatures);
 
     // Create a loop to simulate the eras
     for (int i = 0; i < allCreatures.size(); i++)
     {
+        // Create an iterator
+        auto it = allCreatures.begin();
+        advance(it, i);
+
+        // Store the era
+        string era = it->first;
+
+        // Display the era
+        cout << era << ": " << endl;
+
         // Randomly add a number of Creatures into the first era
         populateEra(simulatedEras, allCreatures, i);
 
@@ -77,8 +87,8 @@ int main()
         for (int j = 0; j < SIMULATIONS; j++)
         {
             // Display the simulation count
-            cout << " ----- SIMULATION: " << j + 1 << " ----- " << endl;
-            
+            cout << " # SIMULATION: " << j + 1 << endl;
+
             // Call the simulateEvents() function, pass in the map and the era index
             simulateEvents(simulatedEras, i);
         }
@@ -397,6 +407,12 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
         // Get the previous era's key
         string prevKey = it->first;
 
+        // Advance the iterator to the current era (advance 1 position)
+        advance(it, 1);
+
+        // Get this current era's key
+        string currentKey = it->first;
+
         // Iterate through each of the lists (land, water, air)
         for (int i = 0; i < it->second.size(); i++)
         {
@@ -422,7 +438,7 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
                     cout << " --- Adding: " << temp << " --- " << endl;
 
                     // Add the Creature into the current Era
-                    simulatedEras.at(prevKey).at(i).push_back(temp);
+                    simulatedEras.at(currentKey).at(i).push_back(temp);
                 }
 
                 // Advance the iterator by 1 position
