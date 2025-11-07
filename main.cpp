@@ -33,6 +33,7 @@ bool isEra(string line);
 void displayList(const list<Creature> &creatureList);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
+void addLeftOver(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
 
 // Main function
 int main()
@@ -342,4 +343,32 @@ void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map
 
     // Add the array into the map
     simulatedEras.insert(make_pair(key, eraArray));
+}
+
+/*
+*/
+void addLeftOver(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex)
+{
+    // If this is the first era, we skip
+    if (eraIndex == 0)
+    {
+        // Exit the function
+        return;
+    }
+    else        // Otherwise, add the Creatures whose evolution level are high
+    {
+        // Create an iterator and advance eraIndex - 1 positions
+        auto it = allCreatures.begin();
+        advance(it, eraIndex - 1);
+
+        // Get the previous era's key
+        string prevKey = it->first;
+
+        // Iterate through the array of the lists and add all the high level Creatures in
+        for (int i = 0; i < it->second.size(); i++)
+        {
+            // Iterate through each of the lists
+            
+        }
+    }
 }

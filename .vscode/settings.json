@@ -5,6 +5,8 @@
         "iosfwd": "cpp",
         "array": "cpp",
         "map": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "xstring": "cpp",
+        "list": "cpp"
     }
 }
