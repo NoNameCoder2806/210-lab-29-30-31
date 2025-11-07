@@ -37,6 +37,7 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
 void readCreatures(list<Creature> &creatureList, string line);
 bool isEra(string line);
 void displayList(const list<Creature> &creatureList);
+void displayArray(const array<list<Creature>, 3> &creatureArray);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
@@ -72,8 +73,14 @@ int main()
         // Store the era
         string era = it->first;
 
+        // Convert the string to uppercase
+        transform(era.begin(), era.end(), era.begin(), [](unsigned char c)
+        {
+            return toupper(c);
+        });
+
         // Display the era
-        cout << era << ": " << endl;
+        cout << " ===== " << era << " ===== " << endl;
 
         // Randomly add a number of Creatures into the first era
         populateEra(simulatedEras, allCreatures, i);
@@ -81,7 +88,7 @@ int main()
         // Add the high level Creatures from the previous era in
         addEvolvedCreatures(simulatedEras, i);
 
-        displayMap(simulatedEras);
+        displayList(simulatedEras.);
 
         // Simulate the events 25 times
         for (int j = 0; j < SIMULATIONS; j++)
@@ -289,6 +296,14 @@ void displayList(const list<Creature> &creatureList)
 
     // Enter a new line
     cout << endl;
+}
+
+/*
+
+*/
+displayArray()
+{
+    
 }
 
 /*
