@@ -24,6 +24,7 @@ const int MAX_CREATURES = 5;
 const int LAND_INDEX = 0;
 const int WATER_INDEX = 1;
 const int AIR_INDEX = 2;
+const int EVOLUTION_MIN_LEVEL = 5;
 const string DATA_FILE = "data.txt";
 
 // Function prototypes
@@ -33,7 +34,7 @@ bool isEra(string line);
 void displayList(const list<Creature> &creatureList);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
-void addLeftOver(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
+void addStrongCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 
 // Main function
 int main()
@@ -346,8 +347,10 @@ void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map
 }
 
 /*
+    addStrongCreatures()
+    Add the 
 */
-void addLeftOver(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex)
+void addStrongCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex)
 {
     // If this is the first era, we skip
     if (eraIndex == 0)
@@ -358,7 +361,7 @@ void addLeftOver(map<string, array<list<Creature>, 3>> &simulatedEras, const map
     else        // Otherwise, add the Creatures whose evolution level are high
     {
         // Create an iterator and advance eraIndex - 1 positions
-        auto it = allCreatures.begin();
+        auto it = simulatedEras.begin();
         advance(it, eraIndex - 1);
 
         // Get the previous era's key
@@ -367,8 +370,31 @@ void addLeftOver(map<string, array<list<Creature>, 3>> &simulatedEras, const map
         // Iterate through the array of the lists and add all the high level Creatures in
         for (int i = 0; i < it->second.size(); i++)
         {
-            // Iterate through each of the lists
-            
+            // Create an iterator to iterate through each of the lists
+            auto it2 = it->second.at(i).begin();
+
+            // Iterate through each Creature
+            while(it2 != it->second.at(i).end())
+            {
+                // Check the Creatures' evolution level
+                if (it2->getLevel() >= EVOLUTION_MIN_LEVEL)
+                {
+                    // Display the Creature
+                    cout << *it2 << endl;
+
+                    // Copy into a new Creature
+                    Creature temp = *it2;
+
+                    // Reset the Ceature's evolution level
+                    temp.resetLevel();
+
+                    // Display the Creature's new info
+                    cout << temp;
+
+                    // Add the Creature into the current Era
+                    simulatedEras.at(eraIndex)
+                }
+            }
         }
     }
 }

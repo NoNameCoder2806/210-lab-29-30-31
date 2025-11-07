@@ -66,6 +66,11 @@ public:
         level--;
     }
 
+    void resetLevel()           // Reset the evolution level
+    {
+        level = 0;
+    }
+
     friend ostream& operator<<(ostream &o, const Creature& c)        // Overload the << operator
     {
         return o << c.name << "(" << c.level << ")";
