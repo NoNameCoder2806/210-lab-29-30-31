@@ -315,7 +315,11 @@ void displayList(const list<Creature> &creatureList)
 }
 
 /*
-
+    displayArray()
+    Display the Creatures from the array
+    Arguments:
+        - creatureArray: the array of Creatures (of the era)
+    Return: none
 */
 void displayArray(const array<list<Creature>, 3> &creatureArray)
 {
