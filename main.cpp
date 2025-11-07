@@ -12,6 +12,7 @@
 #include <map>
 #include <array>
 #include <list>
+#include <vector>
 
 // Headers
 #include "Creature.h"
@@ -43,6 +44,8 @@ void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void evolve(array<list<Creature>, 3> &eraArray);
+void newCreatures(array<list<Creature>, 3> &eraArray, const vector<string> &extinctedCreatures);
+void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures);
 
 // Main function
 int main()
@@ -53,6 +56,9 @@ int main()
     // Create 2 maps, 1 to store the creatures list, another one to simulate
     map<string, array<list<Creature>, 3>> allCreatures;         // A map to store all the Creatures
     map<string, array<list<Creature>, 3>> simulatedEras;        // A map to simulate all the eras
+
+    // Create a vector to store all extincted Creatures' names
+    vector<string> extinctedCreatures;
 
     // Create a string to store the data path
     string data_path = DATA_FILE;
@@ -543,4 +549,15 @@ void evolve(array<list<Creature>, 3> &eraArray)
             advance(it, 1);
         }
     }
+}
+
+/*
+    addCreatures()
+*/
+void addCreatures(array<list<Creature>, 3> &eraArray, const vector<string> &extinctedCreatures)
+{
+}
+
+void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures)
+{
 }
