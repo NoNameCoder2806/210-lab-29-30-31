@@ -25,6 +25,7 @@ const int LAND_INDEX = 0;
 const int WATER_INDEX = 1;
 const int AIR_INDEX = 2;
 const int MIN_EVOLUTION_LEVEL = 5;
+const int TOTAL_CHANCE = 100;
 const int NEW_CREATURE_CHANCE = 40;
 const int DELETE_CREATURE_CHANCE = 20;
 const int EVOLVE_CHANCE = 10;
@@ -39,6 +40,7 @@ void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
+void evolve(array<list<Creature>, 3> &eraArray);
 
 // Main function
 int main()
@@ -434,8 +436,42 @@ void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int er
     string key = it->first;
 
     // Simulate all the events for that era (the array of the era)
-    for (int i = 0; i < simulatedEras.at(key).size(); i++)
+    evolve(simulatedEras.at(key));
+}
+
+/*
+    evolve()
+    Evolve Creatures (each Creature has a 10% chance)
+    Arguments:
+        - eraArray: the array storing all the Creatures of the era
+    Return: none
+*/
+void evolve(array<list<Creature>, 3> &eraArray)
+{
+    // Iterate through the array
+    for (int i = 0; i < eraArray.size(); i++)
     {
-        // 
+        // Create an iterator
+        auto it = eraArray[i].begin();
+
+        // Iterate through each lists
+        while (it != eraArray[i].end())
+        {
+            // Generate a random number
+            int chance = rand() % TOTAL_CHANCE + 1;
+
+            // Compare the chance
+            if (chance <= EVOLVE_CHANCE)
+            {
+                // Evolve the Creature
+                it->increaseLevel();
+                
+                // Display a message
+                cout << " --- " << it->getName() << " has evolved! --- " << endl;
+            }
+
+            // Advance the iterator by 1 position
+            advance(it, 1);
+        }
     }
 }
