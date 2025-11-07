@@ -25,6 +25,9 @@ const int LAND_INDEX = 0;
 const int WATER_INDEX = 1;
 const int AIR_INDEX = 2;
 const int MIN_EVOLUTION_LEVEL = 5;
+const int NEW_CREATURE_CHANCE = 40;
+const int DELETE_CREATURE_CHANCE = 20;
+const int EVOLVE_CHANCE = 10;
 const string DATA_FILE = "data.txt";
 
 // Function prototypes
@@ -35,7 +38,7 @@ void displayList(const list<Creature> &creatureList);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
-
+void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 
 // Main function
 int main()
@@ -411,5 +414,28 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
                 advance(it2, 1);
             }
         }
+    }
+}
+
+/*
+    simulatedEvents()
+    Simulate different events for the eras
+    Arguments:
+        - simulatedEras: the map of all the eras to simulate
+    Return: none
+*/
+void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex)
+{
+    // Create an iterator and advance eraIndex positions
+    auto it = simulatedEras.begin();
+    advance(it, eraIndex);
+
+    // Get the previous era's key
+    string key = it->first;
+
+    // Simulate all the events for that era (the array of the era)
+    for (int i = 0; i < simulatedEras.at(key).size(); i++)
+    {
+        // 
     }
 }
