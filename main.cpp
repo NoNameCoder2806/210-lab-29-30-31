@@ -32,7 +32,7 @@ void readCreatures(list<Creature> &creatureList, string line);
 bool isEra(string line);
 void displayList(const list<Creature> &creatureList);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
-void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
+void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
 
 // Main function
 int main()
@@ -54,7 +54,9 @@ int main()
     displayMap(allCreatures);
 
     // Randomly add a number of Creatures into the first era
-    
+    populateEra(simulatedEras, allCreatures, 0);
+
+    displayMap(simulatedEras);
 
     return 0;
 }
@@ -296,15 +298,15 @@ void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
 }
 
 /*
-    populateList()
-    Populate one of the list (an era) with Creatures based on the allCreatures map
+    populateEra()
+    Populate an era with Creatures based on the allCreatures map
     Arguments:
         - simulatedEras: the map storing all the eras to simulate
         - allCreatures: the map storing all Creatures from all eras
         - eraIndex: the index of the era to simulate
     Return: none
 */
-void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex)
+void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex)
 {
     // Create an iterator and advance eraIndex positions
     auto it = allCreatures.begin();
@@ -325,24 +327,19 @@ void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const ma
         // Generate a random number of Creatures
         int n = rand() % (MAX_CREATURES - MIN_CREATURES + 1) + MIN_CREATURES;
 
-        // Create a list and copy the Creatures into it
-        list<Creature> originalList = originalArray[i];
-
-        // Create our own Creature list
-        list<Creature> creatureList;
+        // Create a vector for random access
+        vector<Creature> originalVector(originalArray[i].begin(), originalArray[i].end());
 
         // Shuffle the list
-        shuffle(originalList.begin(), originalList.end(), gen);
+        shuffle(originalVector.begin(), originalVector.end(), gen);
 
-        // Copy the first n elements into our Creature list
-        for (int j = 0; j < n; j++)
-        {
-            // Create another iterator to get the element
-            // Note: we use next() instead of advance() to keep the original position
-            auto it2 = next(originalList.begin(), j);
+        // Copy first n shuffled creatures into a list
+        list<Creature> creatureList(originalVector.begin(), originalVector.begin() + n);
 
-            // Add the Creature at the index into the list
-            creatureList.push_back(*it2);
-        }
+        // Add the list into the era array
+        eraArray[i] = creatureList;
     }
+
+    // Add the array into the map
+    simulatedEras.insert(make_pair(key, eraArray));
 }
