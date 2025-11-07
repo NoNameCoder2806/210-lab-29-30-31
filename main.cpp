@@ -31,6 +31,8 @@ const int TOTAL_CHANCE = 100;
 const int NEW_CREATURE_CHANCE = 40;
 const int DELETE_CREATURE_CHANCE = 20;
 const int EVOLVE_CHANCE = 10;
+const int MIN_ADD = 0;
+const int MAX_ADD = 5;
 const string DATA_FILE = "data.txt";
 
 // Function prototypes
@@ -44,7 +46,7 @@ void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void evolve(array<list<Creature>, 3> &eraArray);
-void newCreatures(array<list<Creature>, 3> &eraArray, const vector<string> &extinctedCreatures);
+void addCreatures(array<list<Creature>, 3> &eraArray, const vector<string> &extinctedCreatures);
 void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures);
 
 // Main function
@@ -553,9 +555,12 @@ void evolve(array<list<Creature>, 3> &eraArray)
 
 /*
     addCreatures()
+    Add a certain number of new Creatures into the array
+
 */
 void addCreatures(array<list<Creature>, 3> &eraArray, const vector<string> &extinctedCreatures)
 {
+
 }
 
 void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures)
