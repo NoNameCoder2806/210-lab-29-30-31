@@ -7,6 +7,8 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
+#include <random>
 #include <map>
 #include <array>
 #include <list>
@@ -313,6 +315,10 @@ void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const ma
     array<list<Creature>, 3> originalArray = it->second;        // The original array of Creatures
     array<list<Creature>, 3> eraArray;                          // The array we are going to use
 
+    // Setup a random generator
+    random_device rd;
+    mt19937 gen(rd());
+
     // Iterate through the array
     for (int i = 0; i < originalArray.size(); i++)
     {
@@ -321,7 +327,22 @@ void populateList(map<string, array<list<Creature>, 3>> &simulatedEras, const ma
 
         // Create a list and copy the Creatures into it
         list<Creature> originalList = originalArray[i];
+
+        // Create our own Creature list
+        list<Creature> creatureList;
+
+        // Shuffle the list
+        shuffle(originalList.begin(), originalList.end(), gen);
+
+        // Copy the first n elements into our Creature list
+        for (int j = 0; j < n; j++)
+        {
+            // Create another iterator to get the element
+            // Note: we use next() instead of advance() to keep the original position
+            auto it2 = next(originalList.begin(), j);
+
+            // Add the Creature at the index into the list
+            creatureList.push_back(*it2);
+        }
     }
-    list<Creature> creatureList;          // Our list
-    list<Creature> originalList;          // Original list (copy from the map)
 }

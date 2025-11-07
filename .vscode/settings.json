@@ -4,6 +4,7 @@
         "iostream": "cpp",
         "iosfwd": "cpp",
         "array": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "xutility": "cpp"
     }
 }
