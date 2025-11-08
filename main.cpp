@@ -28,7 +28,8 @@ const int WATER_INDEX = 1;
 const int AIR_INDEX = 2;
 const int MIN_EVOLUTION_LEVEL = 5;
 const int TOTAL_CHANCE = 100;
-const int NEW_CREATURE_CHANCE = 40;
+const int NEW_CREATURE_CHANCE_1 = 40;
+const int NEW_CREATURE_CHANCE_2 = 50;
 const int DELETE_CREATURE_CHANCE = 20;
 const int EVOLVE_CHANCE = 10;
 const int MIN_ADD = 0;
@@ -534,7 +535,7 @@ void evolve(array<list<Creature>, 3> &eraArray)
         // Iterate through each lists
         while (it != eraArray[i].end())
         {
-            // Generate a random number
+            // Generate a random chance
             int chance = rand() % TOTAL_CHANCE + 1;
 
             // Compare the chance
@@ -560,7 +561,7 @@ void evolve(array<list<Creature>, 3> &eraArray)
 */
 void addCreatures(array<list<Creature>, 3> &eraArray, const vector<string> &extinctedCreatures)
 {
-
+    // Generate a random chance
 }
 
 void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures)
