@@ -606,15 +606,40 @@ void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<li
         // Generate a random chance
         int chance = rand() % TOTAL_CHANCE + 1;
 
+        // Shuffle the vector
+        shuffle(newCreatures.begin(), newCreatures.end(), gen);
+
+        // Step 6: Add creatures to the era
+        for (int j = 0; j < toAdd && j < candidates.size(); j++)
+        {
+            eraArray[i].push_back(Creature(candidates[j]));
+            cout << " --- Added Creature: " << candidates[j] << " ---" << endl;
+        }
+
         // Compare the chance
         if (chance <= NEW_CREATURE_CHANCE_1)                                     // 1 new Creature
         {
             // Add 1 new Creature to the list
-            
+            eraArray[i].push_back(Creature(newCreatures[0]));
+
+            // Display a message
+            cout << " --- New Creature: " << newCreatures.at(0) << " --- " << endl;
+
+            // Exit the function
+            return;
         }
         else if (chance <= NEW_CREATURE_CHANCE_1 + NEW_CREATURE_CHANCE_2)        // 2 new Creatures
         {
+            // Add 2 new Creatures to the list
+            eraArray[i].push_back(Creature(newCreatures[0]));
+            eraArray[i].push_back(Creature(newCreatures[1]));
 
+            // Display a message
+            cout << " --- New Creature: " << newCreatures.at(0) << " --- " << endl;
+            cout << " --- New Creature: " << newCreatures.at(1) << " --- " << endl;
+
+            // Exit the function
+            return;
         }
         else                                                                     // No new Creature
         {
