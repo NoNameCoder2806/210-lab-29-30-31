@@ -47,8 +47,8 @@ void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void evolve(array<list<Creature>, 3> &eraArray);
-void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctedCreatures,  int eraIndex);
-void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures);
+void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctCreatures,  int eraIndex);
+void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctCreatures);
 
 // Main function
 int main()
@@ -557,9 +557,14 @@ void evolve(array<list<Creature>, 3> &eraArray)
 /*
     addCreatures()
     Add a certain number of new Creatures into the array
-
+    Arguments:
+        - eraArray: the array of the current era
+        - allCreatures: the map containing all the Creatures in all the eras
+        - extinctCreatures: the vector containing all extinct Creatures
+        - eraIndex: the index of the era in simulation
+    Return: none
 */
-void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctedCreatures, int eraIndex)
+void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctCreatures, int eraIndex)
 {
     // Random generator
     random_device rd;
@@ -598,7 +603,7 @@ void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<li
         }
 
         // Remove extinct creatures
-        for (const string &name : extinctedCreatures)
+        for (const string &name : extinctCreatures)
         {
             newCreatures.erase(remove(newCreatures.begin(), newCreatures.end(), name), newCreatures.end());
         }
@@ -642,6 +647,6 @@ void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<li
     }
 }
 
-void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures)
+void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctCreatures)
 {
 }
