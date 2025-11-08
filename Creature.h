@@ -34,12 +34,12 @@ public:
     }
 
     // Accessors / Getters
-    string getName()
+    string getName() const
     {
         return name;
     }
 
-    int getLevel()
+    int getLevel() const
     {
         return level;
     }

@@ -490,8 +490,8 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
                     simulatedEras.at(currentKey).at(i).push_back(temp);
                 }
 
-                // Advance the iterator by 1 position
-                advance(it3, 1);
+                // Advance the iterator
+                ++it3;
             }
         }
     }
@@ -548,8 +548,8 @@ void evolve(array<list<Creature>, 3> &eraArray)
                 cout << " --- " << it->getName() << " has evolved! --- " << endl;
             }
 
-            // Advance the iterator by 1 position
-            advance(it, 1);
+            // Advance the iterator
+            ++it;
         }
     }
 }
@@ -584,12 +584,24 @@ void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<li
         // Iterate until we reach the end of the list
         while (it2 != allCreatures.at(era).at(i).end())
         {
-            // Add the name to the vector
+            // Add the names to the vector
             newCreatures.push_back(it2->getName());
+
+            // Advance the iterator
+            ++it2;
         }
 
-        // Remove Creatures that are in the list from the vector
-        for ()
+        // Remove creatures already in the era
+        for (const Creature &c : eraArray[i])
+        {
+            newCreatures.erase(remove(newCreatures.begin(), newCreatures.end(), c.getName()), newCreatures.end());
+        }
+
+        // Remove extinct creatures
+        for (const string &name : extinctedCreatures)
+        {
+            newCreatures.erase(remove(newCreatures.begin(), newCreatures.end(), name), newCreatures.end());
+        }
 
         // Generate a random chance
         int chance = rand() % TOTAL_CHANCE + 1;
@@ -597,7 +609,8 @@ void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<li
         // Compare the chance
         if (chance <= NEW_CREATURE_CHANCE_1)                                     // 1 new Creature
         {
-
+            // Add 1 new Creature to the list
+            
         }
         else if (chance <= NEW_CREATURE_CHANCE_1 + NEW_CREATURE_CHANCE_2)        // 2 new Creatures
         {
