@@ -1,13 +1,18 @@
-// COMSC-210 | Lab 30 | Dat Hoang Vien
+// COMSC-210 | Lab 31 | Dat Hoang Vien
 // IDE used: Visual Studio Code
 
 // Libraries
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+#include <random>
 #include <map>
 #include <array>
 #include <list>
+#include <vector>
 
 // Headers
 #include "Creature.h"
@@ -15,11 +20,20 @@
 using namespace std;
 
 // Constants
-const int MIN_CREATURES = 3;
-const int MAX_CREATURES = 5;
+const int MIN_CREATURES = 7;
+const int MAX_CREATURES = 10;
+const int SIMULATIONS = 25;
 const int LAND_INDEX = 0;
 const int WATER_INDEX = 1;
 const int AIR_INDEX = 2;
+const int MIN_EVOLUTION_LEVEL = 5;
+const int TOTAL_CHANCE = 100;
+const int NEW_CREATURE_CHANCE_1 = 40;
+const int NEW_CREATURE_CHANCE_2 = 10;
+const int DELETE_CREATURE_CHANCE = 5;
+const int EVOLVE_CHANCE = 10;
+const int MIN_ADD = 0;
+const int MAX_ADD = 5;
 const string DATA_FILE = "data.txt";
 
 // Function prototypes
@@ -27,23 +41,89 @@ void readData(map<string, array<list<Creature>, 3>> &allCreatures, string data_p
 void readCreatures(list<Creature> &creatureList, string line);
 bool isEra(string line);
 void displayList(const list<Creature> &creatureList);
+void displayArray(const array<list<Creature>, 3> &creatureArray);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
+void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
+void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
+void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, vector<string> &extinctCreatures, int eraIndex);
+void evolve(array<list<Creature>, 3> &eraArray);
+void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctCreatures,  int eraIndex);
+void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctCreatures);
 
 // Main function
 int main()
 {
+    // Call srand() and time()
+    srand(time(0));
+
     // Create 2 maps, 1 to store the creatures list, another one to simulate
     map<string, array<list<Creature>, 3>> allCreatures;         // A map to store all the Creatures
     map<string, array<list<Creature>, 3>> simulatedEras;        // A map to simulate all the eras
+
+    // Create a vector to store all extincted Creatures' names
+    vector<string> extinctCreatures;
 
     // Create a string to store the data path
     string data_path = DATA_FILE;
 
     // Read all the data and populate the allCreatures map
-    readData(allCreatures, data_path);    
+    readData(allCreatures, data_path);
 
-    // Display the data of the allCreatures map
-    displayMap(allCreatures);
+    // Create a loop to simulate the eras
+    for (int i = 0; i < allCreatures.size(); i++)
+    {
+        // Create an iterator
+        auto it = allCreatures.begin();
+        advance(it, i);
+
+        // Store the era
+        string era = it->first;
+        string uppercasedEra = era;
+
+        // Convert the string to uppercase
+        transform(uppercasedEra.begin(), uppercasedEra.end(), uppercasedEra.begin(), [](unsigned char c)
+        {
+            return toupper(c);
+        });
+
+        // Display the era
+        cout << " ===== " << uppercasedEra << " ===== " << endl;
+
+        // Randomly add a number of Creatures into the first era
+        populateEra(simulatedEras, allCreatures, i);
+
+        // Add the high level Creatures from the previous era in
+        addEvolvedCreatures(simulatedEras, i);
+
+        // Display the Creatures in the array of the era
+        displayArray(simulatedEras.at(era));
+
+        // Simulate the events 25 times
+        for (int j = 0; j < SIMULATIONS; j++)
+        {
+            // Display the simulation count
+            cout << " # SIMULATION: " << j + 1 << endl;
+
+            // Call the simulateEvents() function, pass in the map and the era index
+            simulateEvents(simulatedEras, allCreatures, extinctCreatures, i);
+        }
+
+        // Enter a new line
+        cout << endl;
+
+        // Display result after simulation
+        cout << " ----- AFTER SIMULATION ----- " << endl;
+        cout << " ===== " << uppercasedEra << " ===== " << endl;
+        
+        // Display the Creatures in the array of the era
+        displayArray(simulatedEras.at(era));
+
+        // Display a barrier
+        cout << "=================================================="          // Display 50 =         (50)
+             << "=================================================="          // Display another 50 = (100)
+             << "=================================================="          // Display another 50 = (150)
+             << endl << endl;
+    }
 
     return 0;
 }
@@ -241,22 +321,16 @@ void displayList(const list<Creature> &creatureList)
 }
 
 /*
-    displayMap()
-    Display all the eras of the map and all the Creatures of those eras
+    displayArray()
+    Display the Creatures from the array
     Arguments:
-        - creatureMap: the map of eras and the Creatures of those eras (passed by const reference)
+        - creatureArray: the array of Creatures (of the era)
     Return: none
 */
-void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
+void displayArray(const array<list<Creature>, 3> &creatureArray)
 {
-    // Iterate through each pair of data
-    for (auto pair : creatureMap)
-    {
-        // Display the era
-        cout << " --- Era: " << pair.first << " --- " << endl;
-
-        // Iterate through each list of the array
-        for (int i = 0; i < pair.second.size(); i++)
+    // Iterate through each list of the array
+        for (int i = 0; i < creatureArray.size(); i++)
         {
             // Display the type (land, water, air)
             if (i == 0)
@@ -276,10 +350,343 @@ void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
             }
 
             // Display the Creatures in the list
-            displayList(pair.second.at(i));
+            displayList(creatureArray.at(i));
         }
 
         // Enter a new line
         cout << endl;
+}
+
+/*
+    displayMap()
+    Display all the eras of the map and all the Creatures of those eras
+    Arguments:
+        - creatureMap: the map of eras and the Creatures of those eras (passed by const reference)
+    Return: none
+*/
+void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap)
+{
+    // Iterate through each pair of data
+    for (auto pair : creatureMap)
+    {
+        // Display the era
+        cout << " --- Era: " << pair.first << " --- " << endl;
+
+        // Display the array
+        displayArray(creatureMap.at(pair.first));
+
+        // Enter a new line
+        cout << endl;
+    }
+}
+
+/*
+    populateEra()
+    Populate an era with Creatures based on the allCreatures map
+    Arguments:
+        - simulatedEras: the map storing all the eras to simulate
+        - allCreatures: the map storing all Creatures from all eras
+        - eraIndex: the index of the era to simulate
+    Return: none
+*/
+void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex)
+{
+    // Create an iterator and advance eraIndex positions
+    auto it = allCreatures.begin();
+    advance(it, eraIndex);
+
+    // Create variables to store the key and the Creatures lists
+    string key = it->first;                                     // The key (the name of the era, i.e. "Jurassic")
+    array<list<Creature>, 3> originalArray = it->second;        // The original array of Creatures
+    array<list<Creature>, 3> eraArray;                          // The array we are going to use
+
+    // Setup a random generator
+    random_device rd;
+    mt19937 gen(rd());
+
+    // Iterate through the array
+    for (int i = 0; i < originalArray.size(); i++)
+    {
+        // Generate a random number of Creatures
+        int n = rand() % (MAX_CREATURES - MIN_CREATURES + 1) + MIN_CREATURES;
+
+        // Create a vector for random access
+        vector<Creature> originalVector(originalArray[i].begin(), originalArray[i].end());
+
+        // Shuffle the list
+        shuffle(originalVector.begin(), originalVector.end(), gen);
+
+        // Copy first n shuffled creatures into a list
+        list<Creature> creatureList(originalVector.begin(), originalVector.begin() + n);
+
+        // Add the list into the era array
+        eraArray[i] = creatureList;
+    }
+
+    // Add the array into the map
+    simulatedEras.insert(make_pair(key, eraArray));
+}
+
+/*
+    addEvolvedCreatures()
+    Add the Creatures whose level is above MIN_EVOLUTION_LEVEL
+    Arguments:
+        - simulatedEras: the map of all the eras to simulate
+        - eraIndex: the index of the era to simulate
+    Return: none
+*/
+void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex)
+{
+    // If this is the first era, we skip
+    if (eraIndex == 0)
+    {
+        // Exit the function
+        return;
+    }
+    else        // Otherwise, add the Creatures whose evolution level are high
+    {
+        // Create an iterator and advance eraIndex - 1 positions
+        auto it = simulatedEras.begin();
+        advance(it, eraIndex - 1);
+
+        // Get the previous era's key
+        string prevKey = it->first;
+
+        // Create another iterator and advance to eraIndex positions
+        auto it2 = simulatedEras.begin();
+        advance(it2, eraIndex);
+
+        // Get this current era's key
+        string currentKey = it2->first;
+
+        // Iterate through each of the lists (land, water, air)
+        for (int i = 0; i < it->second.size(); i++)
+        {
+            // Create another iterator to iterate through each of the lists
+            auto it3 = it->second.at(i).begin();
+
+            // Iterate through each Creature in the list
+            while(it3 != it->second.at(i).end())
+            {
+                // Check the Creatures' evolution level
+                if (it3->getLevel() >= MIN_EVOLUTION_LEVEL)
+                {
+                    // Display the Creature
+                    cout << " - High level Creature: " << *it3 << " - " << endl;
+
+                    // Copy into a new Creature
+                    Creature temp = *it3;
+
+                    // Reset the Ceature's evolution level
+                    temp.resetLevel();
+
+                    // Display the Creature's new info
+                    cout << " --- Adding: " << temp << " --- " << endl;
+
+                    // Add the Creature into the current Era
+                    simulatedEras.at(currentKey).at(i).push_back(temp);
+                }
+
+                // Advance the iterator
+                ++it3;
+            }
+        }
+    }
+}
+
+/*
+    simulatedEvents()
+    Simulate different events for the eras
+    Arguments:
+        - simulatedEras: the map of all the eras to simulate
+    Return: none
+*/
+void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, vector<string> &extinctCreatures, int eraIndex)
+{
+    // Create an iterator and advance eraIndex positions
+    auto it = simulatedEras.begin();
+    advance(it, eraIndex);
+
+    // Get the previous era's key
+    string key = it->first;
+
+    // Simulate all the events for that era (the array of the era)
+    evolve(simulatedEras.at(key));
+    addCreatures(simulatedEras.at(key), allCreatures, extinctCreatures, eraIndex);
+    extinction(simulatedEras.at(key), extinctCreatures);
+}
+
+/*
+    evolve()
+    Evolve Creatures (each Creature has a 10% chance)
+    Arguments:
+        - eraArray: the array storing all the Creatures of the era
+    Return: none
+*/
+void evolve(array<list<Creature>, 3> &eraArray)
+{
+    // Iterate through the array
+    for (int i = 0; i < eraArray.size(); i++)
+    {
+        // Create an iterator
+        auto it = eraArray[i].begin();
+
+        // Iterate through each lists
+        while (it != eraArray[i].end())
+        {
+            // Generate a random chance
+            int chance = rand() % TOTAL_CHANCE + 1;
+
+            // Compare the chance
+            if (chance <= EVOLVE_CHANCE)
+            {
+                // Evolve the Creature
+                it->increaseLevel();
+                
+                // Display a message
+                cout << " --- " << it->getName() << " has evolved! --- " << endl;
+            }
+
+            // Advance the iterator
+            ++it;
+        }
+    }
+}
+
+/*
+    addCreatures()
+    Add a certain number of new Creatures into the array
+    Arguments:
+        - eraArray: the array containing all the Creatures of the era in simulation
+        - allCreatures: the map containing all the Creatures in all the eras
+        - extinctCreatures: the vector containing all extinct Creatures
+        - eraIndex: the index of the era in simulation
+    Return: none
+*/
+void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctCreatures, int eraIndex)
+{
+    // Random generator
+    random_device rd;
+    mt19937 gen(rd());
+
+    // Create an iterator
+    auto it = allCreatures.begin();
+    advance(it, eraIndex);
+
+    // Get the era's key
+    string era = it->first;
+
+    // Iterate through each list in the array
+    for (int i = 0; i < eraArray.size(); i++)
+    {
+        // Create a vector to store the Creatures' names
+        vector<string> newCreatures;
+
+        // Create another iterator to traverse through the list
+        auto it2 = allCreatures.at(era).at(i).begin();
+
+        // Iterate until we reach the end of the list
+        while (it2 != allCreatures.at(era).at(i).end())
+        {
+            // Add the names to the vector
+            newCreatures.push_back(it2->getName());
+
+            // Advance the iterator
+            ++it2;
+        }
+
+        // Remove creatures already in the era
+        for (const Creature &c : eraArray[i])
+        {
+            newCreatures.erase(remove(newCreatures.begin(), newCreatures.end(), c.getName()), newCreatures.end());
+        }
+
+        // Remove extinct creatures
+        for (const string &name : extinctCreatures)
+        {
+            newCreatures.erase(remove(newCreatures.begin(), newCreatures.end(), name), newCreatures.end());
+        }
+
+        // Generate a random chance
+        int chance = rand() % TOTAL_CHANCE + 1;
+
+        // Shuffle the vector
+        shuffle(newCreatures.begin(), newCreatures.end(), gen);
+
+        // Compare the chance
+        if (chance <= NEW_CREATURE_CHANCE_1)                                     // 1 new Creature
+        {
+            // Add 1 new Creature to the list
+            eraArray[i].push_back(Creature(newCreatures[0]));
+
+            // Display a message
+            cout << " --- New Species: " << newCreatures[0] << " --- " << endl;
+
+            // Exit the function
+            return;
+        }
+        else if (chance <= NEW_CREATURE_CHANCE_1 + NEW_CREATURE_CHANCE_2)        // 2 new Creatures
+        {
+            // Add 2 new Creatures to the list
+            eraArray[i].push_back(Creature(newCreatures.at(0)));
+            eraArray[i].push_back(Creature(newCreatures.at(1)));
+
+            // Display the messages
+            cout << " --- New Species: " << newCreatures[0] << " --- " << endl;
+            cout << " --- New Species: " << newCreatures[1] << " --- " << endl;
+
+            // Exit the function
+            return;
+        }
+        else                                                                     // No new Creature
+        {
+            // Exit the function
+            return;
+        }
+    }
+}
+
+/*
+    extinction()
+    Remove certain Creatures based on chance (sudden extinction)
+    Arguments:
+        - eraArray: the array containing all the Creatures of the era in simulation
+        - extinctCreatures: the vector containing all extinct Creatures
+    Return: none
+*/
+void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctCreatures)
+{
+    // Iterate through the array
+    for (int i = 0; i < eraArray.size(); i++)
+    {
+        // Create an iterator to traverse the list
+        auto it = eraArray.at(i).begin();
+
+        // Iterate to the end of the list
+        while (it != eraArray.at(i).end())
+        {
+            // Generate a random chance
+            int chance = rand() % TOTAL_CHANCE + 1;
+
+            // Compare the chance
+            if (chance <= DELETE_CREATURE_CHANCE)
+            {
+                // Display a message
+                cout << " --- Extinct: " << it->getName() << " --- " << endl;
+
+                // Add the name of the Creature to the extinct vector
+                extinctCreatures.push_back(it->getName());
+
+                // Remove the Creature
+                it = eraArray[i].erase(it);
+                // Note: erase() delete the current iterator and return the next iterator
+                // Therefore, we do not need to advance the iterator
+            }
+            else
+            {
+                // Advance the iterator
+                ++it;
+            }
+        }
     }
 }

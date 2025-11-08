@@ -34,12 +34,12 @@ public:
     }
 
     // Accessors / Getters
-    string getName()
+    string getName() const
     {
         return name;
     }
 
-    int getLevel()
+    int getLevel() const
     {
         return level;
     }
@@ -64,6 +64,11 @@ public:
     void decreaseLevel()        // Decrease evolution level by 1
     {
         level--;
+    }
+
+    void resetLevel()           // Reset the evolution level
+    {
+        level = 0;
     }
 
     friend ostream& operator<<(ostream &o, const Creature& c)        // Overload the << operator

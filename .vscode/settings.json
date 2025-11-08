@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "iostream": "cpp",
+        "iosfwd": "cpp",
+        "array": "cpp",
+        "map": "cpp",
+        "xutility": "cpp",
+        "xstring": "cpp",
+        "list": "cpp",
+        "ostream": "cpp",
+        "utility": "cpp"
+    }
+}
