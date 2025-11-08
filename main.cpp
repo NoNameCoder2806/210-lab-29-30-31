@@ -561,13 +561,35 @@ void evolve(array<list<Creature>, 3> &eraArray)
 */
 void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctedCreatures, int eraIndex)
 {
+    // Random generator
+    random_device rd;
+    mt19937 gen(rd());
+
+    // Create an iterator
+    auto it = allCreatures.begin();
+    advance(it, eraIndex);
+
     // Get the era's key
-    
+    string era = it->first;
+
     // Iterate through each list in the array
     for (int i = 0; i < eraArray.size(); i++)
     {
-        // Create a vector to hold the whole Creature list
-        vector<string> originalList = allCreatures.at(i).;
+        // Create a vector to store the Creatures' names
+        vector<string> newCreatures;
+
+        // Create another iterator to traverse through the list
+        auto it2 = allCreatures.at(era).at(i).begin();
+
+        // Iterate until we reach the end of the list
+        while (it2 != allCreatures.at(era).at(i).end())
+        {
+            // Add the name to the vector
+            newCreatures.push_back(it2->getName());
+        }
+
+        // Remove Creatures that are in the list from the vector
+        for ()
 
         // Generate a random chance
         int chance = rand() % TOTAL_CHANCE + 1;
