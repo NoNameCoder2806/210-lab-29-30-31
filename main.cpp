@@ -47,7 +47,7 @@ void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
 void evolve(array<list<Creature>, 3> &eraArray);
-void addCreatures(array<list<Creature>, 3> &eraArray, const vector<string> &extinctedCreatures);
+void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctedCreatures,  int eraIndex);
 void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures);
 
 // Main function
@@ -559,9 +559,33 @@ void evolve(array<list<Creature>, 3> &eraArray)
     Add a certain number of new Creatures into the array
 
 */
-void addCreatures(array<list<Creature>, 3> &eraArray, const vector<string> &extinctedCreatures)
+void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctedCreatures, int eraIndex)
 {
-    // Generate a random chance
+    // Get the era's key
+    
+    // Iterate through each list in the array
+    for (int i = 0; i < eraArray.size(); i++)
+    {
+        // Create a vector to hold the whole Creature list
+        vector<string> originalList = allCreatures.at(i).;
+
+        // Generate a random chance
+        int chance = rand() % TOTAL_CHANCE + 1;
+
+        // Compare the chance
+        if (chance <= NEW_CREATURE_CHANCE_1)                                     // 1 new Creature
+        {
+
+        }
+        else if (chance <= NEW_CREATURE_CHANCE_1 + NEW_CREATURE_CHANCE_2)        // 2 new Creatures
+        {
+
+        }
+        else                                                                     // No new Creature
+        {
+            return;
+        }
+    }
 }
 
 void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctedCreatures)
