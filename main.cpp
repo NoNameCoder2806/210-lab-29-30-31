@@ -20,8 +20,8 @@
 using namespace std;
 
 // Constants
-const int MIN_CREATURES = 3;
-const int MAX_CREATURES = 5;
+const int MIN_CREATURES = 7;
+const int MAX_CREATURES = 10;
 const int SIMULATIONS = 25;
 const int LAND_INDEX = 0;
 const int WATER_INDEX = 1;
@@ -30,7 +30,7 @@ const int MIN_EVOLUTION_LEVEL = 5;
 const int TOTAL_CHANCE = 100;
 const int NEW_CREATURE_CHANCE_1 = 40;
 const int NEW_CREATURE_CHANCE_2 = 10;
-const int DELETE_CREATURE_CHANCE = 10;
+const int DELETE_CREATURE_CHANCE = 5;
 const int EVOLVE_CHANCE = 10;
 const int MIN_ADD = 0;
 const int MAX_ADD = 5;
@@ -67,10 +67,7 @@ int main()
     string data_path = DATA_FILE;
 
     // Read all the data and populate the allCreatures map
-    readData(allCreatures, data_path);    
-
-    // Display the data of the allCreatures map
-    // displayMap(allCreatures);
+    readData(allCreatures, data_path);
 
     // Create a loop to simulate the eras
     for (int i = 0; i < allCreatures.size(); i++)
