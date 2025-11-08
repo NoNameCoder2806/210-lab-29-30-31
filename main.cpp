@@ -613,26 +613,11 @@ void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<li
         if (chance <= NEW_CREATURE_CHANCE_1)                                     // 1 new Creature
         {
             // Add 1 new Creature to the list
-            eraArray[i].push_back(Creature(newCreatures[0]));
-
-            // Display a message
-            cout << " --- New Creature: " << newCreatures.at(0) << " --- " << endl;
-
-            // Exit the function
-            return;
+            
         }
         else if (chance <= NEW_CREATURE_CHANCE_1 + NEW_CREATURE_CHANCE_2)        // 2 new Creatures
         {
-            // Add 2 new Creatures to the list
-            eraArray[i].push_back(Creature(newCreatures[0]));
-            eraArray[i].push_back(Creature(newCreatures[1]));
 
-            // Display a message
-            cout << " --- New Creature: " << newCreatures.at(0) << " --- " << endl;
-            cout << " --- New Creature: " << newCreatures.at(1) << " --- " << endl;
-
-            // Exit the function
-            return;
         }
         else                                                                     // No new Creature
         {
