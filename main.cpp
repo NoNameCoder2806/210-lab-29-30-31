@@ -29,8 +29,8 @@ const int AIR_INDEX = 2;
 const int MIN_EVOLUTION_LEVEL = 5;
 const int TOTAL_CHANCE = 100;
 const int NEW_CREATURE_CHANCE_1 = 40;
-const int NEW_CREATURE_CHANCE_2 = 50;
-const int DELETE_CREATURE_CHANCE = 20;
+const int NEW_CREATURE_CHANCE_2 = 10;
+const int DELETE_CREATURE_CHANCE = 10;
 const int EVOLVE_CHANCE = 10;
 const int MIN_ADD = 0;
 const int MAX_ADD = 5;
@@ -558,7 +558,7 @@ void evolve(array<list<Creature>, 3> &eraArray)
     addCreatures()
     Add a certain number of new Creatures into the array
     Arguments:
-        - eraArray: the array of the current era
+        - eraArray: the array containing all the Creatures of the era in simulation
         - allCreatures: the map containing all the Creatures in all the eras
         - extinctCreatures: the vector containing all extinct Creatures
         - eraIndex: the index of the era in simulation
@@ -647,6 +647,37 @@ void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<li
     }
 }
 
+/*
+    extinction()
+    Remove certain Creatures based on chance (sudden extinction)
+    Arguments:
+        - eraArray: the array containing all the Creatures of the era in simulation
+        - extinctCreatures: the vector containing all extinct Creatures
+    Return: none
+*/
 void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctCreatures)
 {
+    // Iterate through the array
+    for (int i = 0; i < eraArray.size(); i++)
+    {
+        // Create an iterator to traverse the list
+        auto it = eraArray.at(i).begin();
+
+        // Iterate to the end of the list
+        while (it != eraArray.at(i).end())
+        {
+            // Generate a random chance
+            int chance = rand() % TOTAL_CHANCE + 1;
+
+            // Compare the chance
+            if (chance <= DELETE_CREATURE_CHANCE)
+            {
+                // Remove the Creature
+                eraArray.at(i).remove();
+            }
+
+            // Advance the iterator
+            ++it;
+        }
+    }
 }
