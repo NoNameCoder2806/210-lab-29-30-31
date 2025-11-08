@@ -1,0 +1,47 @@
+1.  Bug: could not store the data into the allCreatures map
+    Fix: Insert the list of Creatures into the array after reading
+    (commit: 70ee16c, file: main.cpp, line: 110, 121, 132)
+
+2.  Bug: displayList() and displayMap() does not accept const arguments
+    Fix: changed function parameters to const references
+    (commit: 6202fbe, file: main.cpp,line 29, 30)
+
+3.  Bug: could not use shuffle() on the Creature list shuffle the Creatures
+    Fix: use vector instead of list to store all the Creatures to add
+    (commit: 3c7b6ac, file: main.cpp, line: 330)
+
+4.  Bug: could not reset the level of the Creature
+    Fix: create a resetLevel() member function in Creature.h
+    (commit: fcb8911, file: Creature.h, line: 69)
+
+5.  Bug: can't add the Creatures into the next era (program run endlessly, doesn't terminate)
+    Fix: advance iterator at the end of the while loop
+    (commit: d4c522d, file: main.cpp, line: 409)
+
+6.  Bug: add evolved Creatures into the previous era instead of the current era
+    Fix: created another key to store the current era's name and add Creatures to that era instead
+    (commit: 9e3d80c, file: main.cpp, line: 441)
+
+7.  Bug: cannot display the era name in uppercase
+    Fix: create another string to store the name instead of using the same variable
+    (commit: 57d0a6d, file: main.cpp, line: 78)
+
+8.  Bug: cannot access getName() member function of class Creature
+    Fix: let the getName() function be const
+    (commit: 427424d, file: Creature.h, line: 37)
+
+9.  Bug: addCreatures() function does not have the original Creatures map and era index
+    Fix: added the original map and era index into the function parameters
+    (commit: 2103d91, file: main.cpp, line: 50)
+
+10. Bug: some Creatures are skipped in the list when deleting
+    Fix: put ++it in the else block because the iterator is always advanced when erase() is called
+    (commit: 5b075ae, file: main.cpp, line: 691)
+
+11. Bug: simulatedEvents() function does not have the original Creatures map and era index to pass into addCreatures()
+    Fix: added the original map and era index into the function parameters
+    (commit: 5b075ae, file: main.cpp, line: 48)
+
+12. Bug: some lists become empty after the simulation
+    Fix: changed the number of Creatures added at the beginning, lower the extinction chance to 5%
+    (commit: fba9815, file: main.cpp, line: 23 & 33)
