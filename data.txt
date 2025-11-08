@@ -1,5 +1,5 @@
 Triassic
-LAND: Coelophysis, Plateosaurus, Herrerasaurus, Eoraptor, Postosuchus, Saltopus, Melanorosaurus
+LAND: Efraasia, Kholumolumo, Lophostropheus, Tawa, Unaysaurus, Coloradisaurus, Schleitheimia, Riojasaurus, Eocursor, Mussaurus, Thecodontosaurus, Lucianovenator, Procompsognathus, Guaibasaurus, Heterodontosaurus, Eucnemesaurus, Nambalia, Nhandumirim, Camelotia, Lepidus, Issi, Staurikosaurus, Pendraig, Gnathovorax, Halticosaurus, Sanjuansaurus, Liliensternus, Ingentia, Pisanosaurus, Isanosaurus, Panphagia, Herrerasaurus, Plateosaurus, Gojirasaurus, Chindesaurus, Erythrovenator, Euskelosaurus, Alwalkeria, Chromogisaurus, Macrocollum, Lessemsaurus, Meroktenos, Eoraptor, Melanorosaurus, Bagualosaurus, Notatesseraeraptor, Ruehleia, Antetonitrus, Daemonosaurus, Camposaurus, Pantydraco, Saturnalia, Eodromaeus, Powellvenator, Coelophysis, Sefapanosaurus, Zupaysaurus, Buriolestes, Asylosaurus, Lycorhinus
 WATER: Nothosaurus, Tanystropheus, Cymbospondylus, Placodus, Mixosaurus, Shonisaurus, Thalattosaurus
 AIR: Peteinosaurus, Preondactylus, Austriadactylus, Eudimorphodon, Caviramus, Campylognathoides, Carniadactylus
 
