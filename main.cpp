@@ -45,7 +45,7 @@ void displayArray(const array<list<Creature>, 3> &creatureArray);
 void displayMap(const map<string, array<list<Creature>, 3>> &creatureMap);
 void populateEra(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, int eraIndex);
 void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
-void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex);
+void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, vector<string> &extinctCreatures, int eraIndex);
 void evolve(array<list<Creature>, 3> &eraArray);
 void addCreatures(array<list<Creature>, 3> &eraArray, const map<string, array<list<Creature>, 3>> &allCreatures, const vector<string> &extinctCreatures,  int eraIndex);
 void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctCreatures);
@@ -61,7 +61,7 @@ int main()
     map<string, array<list<Creature>, 3>> simulatedEras;        // A map to simulate all the eras
 
     // Create a vector to store all extincted Creatures' names
-    vector<string> extinctedCreatures;
+    vector<string> extinctCreatures;
 
     // Create a string to store the data path
     string data_path = DATA_FILE;
@@ -108,7 +108,7 @@ int main()
             cout << " # SIMULATION: " << j + 1 << endl;
 
             // Call the simulateEvents() function, pass in the map and the era index
-            simulateEvents(simulatedEras, i);
+            simulateEvents(simulatedEras, allCreatures, extinctCreatures, i);
         }
 
         // Enter a new line
@@ -504,7 +504,7 @@ void addEvolvedCreatures(map<string, array<list<Creature>, 3>> &simulatedEras, i
         - simulatedEras: the map of all the eras to simulate
     Return: none
 */
-void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int eraIndex)
+void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, const map<string, array<list<Creature>, 3>> &allCreatures, vector<string> &extinctCreatures, int eraIndex)
 {
     // Create an iterator and advance eraIndex positions
     auto it = simulatedEras.begin();
@@ -515,6 +515,8 @@ void simulateEvents(map<string, array<list<Creature>, 3>> &simulatedEras, int er
 
     // Simulate all the events for that era (the array of the era)
     evolve(simulatedEras.at(key));
+    addCreatures(simulatedEras.at(key), allCreatures, extinctCreatures, eraIndex);
+    extinction(simulatedEras.at(key), extinctCreatures);
 }
 
 /*
@@ -672,12 +674,22 @@ void extinction(array<list<Creature>, 3> &eraArray, vector<string> &extinctCreat
             // Compare the chance
             if (chance <= DELETE_CREATURE_CHANCE)
             {
-                // Remove the Creature
-                eraArray.at(i).remove();
-            }
+                // Display a message
+                cout << " --- Extinct: " << it->getName() << " --- " << endl;
 
-            // Advance the iterator
-            ++it;
+                // Add the name of the Creature to the extinct vector
+                extinctCreatures.push_back(it->getName());
+
+                // Remove the Creature
+                it = eraArray[i].erase(it);
+                // Note: erase() delete the current iterator and return the next iterator
+                // Therefore, we do not need to advance the iterator
+            }
+            else
+            {
+                // Advance the iterator
+                ++it;
+            }
         }
     }
 }
